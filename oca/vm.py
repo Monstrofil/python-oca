@@ -15,6 +15,7 @@ class VirtualMachine(PoolElement):
         'migrate': 'vm.migrate',
         'deploy': 'vm.deploy',
         'savedisk': 'vm.savedisk',
+        'savediskas': 'vm.disksaveas',
         'delete': 'vm.delete',
         'chown': 'vm.chown',
         'update': 'vm.update',
@@ -224,6 +225,25 @@ class VirtualMachine(PoolElement):
            image id where the disk will be saved.
         """
         self.client.call(self.METHODS['savedisk'], self.id, disk_id, dest_disk)
+
+    def save_disk_as(self, disk_id, image_name, image_type='', snapshot_id=-1):
+        """
+        Sets the disk to be saved in the given image
+
+        Arguments
+
+        ``disk_id``
+           disk id of the disk we want to save
+        ``image_name``
+           name for the new Image where the disk will be saved
+        ``image_type``
+           type for the new Image. If it is an empty string, then
+           the default one will be used
+        ``snapshot_id``
+           id of the snapshot to export, if -1 the current image state will be used
+        """
+        self.client.call(self.METHODS['savediskas'], self.id, disk_id,
+                         image_name, image_type, snapshot_id)
 
     def shutdown(self):
         """

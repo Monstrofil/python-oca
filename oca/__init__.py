@@ -116,7 +116,8 @@ class Client(object):
             func = getattr(self.server.one, function)
             ret = func(self.one_auth, *args)
             try:
-                is_success, data, return_code = ret
+                # according to nebula docs, first 3 args are always following
+                is_success, data, return_code = ret[:3]
             except ValueError:
                 data = ''
                 is_success = False
