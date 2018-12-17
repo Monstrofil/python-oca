@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-from .pool import Pool, PoolElement, Template, extractString
+from .pool import Pool, StatePoolElement, Template, extractString
 
 
-class Datastore(PoolElement):
+class Datastore(StatePoolElement):
     METHODS = {
         # 'info'     : 'datastore.info',
         'allocate': 'datastore.allocate',

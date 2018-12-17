@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-from .pool import Pool, PoolElement, Template, extractString
+from .pool import Pool, Template, extractString, StatePoolElement
 
 
-class Image(PoolElement):
+class Image(StatePoolElement):
     METHODS = {
         'info': 'image.info',
         'allocate': 'image.allocate',

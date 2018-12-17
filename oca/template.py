@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-from .pool import Pool, PoolElement, Template
+from .pool import Pool, Template, StatePoolElement
 
 
-class VmTemplate(PoolElement):
+class VmTemplate(StatePoolElement):
     METHODS = {
         'info': 'template.info',
         'allocate': 'template.allocate',

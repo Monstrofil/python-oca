@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
+import logging
 import xml.etree.ElementTree as ET
+from time import time, sleep
 
 from .exceptions import OpenNebulaException
 
@@ -136,6 +138,8 @@ class Pool(list, XMLElement):
 
 
 class PoolElement(XMLElement):
+    ELEMENT_NAME = None
+
     def __init__(self, xml, client):
         super(PoolElement, self).__init__(xml)
         self.client = client
@@ -175,3 +179,39 @@ class PoolElement(XMLElement):
             name of a target element
         """
         self.client.call(self.METHODS['clone'], self.id, name)
+
+
+class StatePoolElement(PoolElement):
+    def wait_for_state(self, state, timeout=60 * 10):
+        """
+        Wait for the Opennebula component to have a specified state
+
+        ``state``
+            OpenNebula API state constant
+        ``timeout``
+            time to wait in seconds
+        """
+
+        end = time() + timeout
+        logging.info(
+            'Waiting for status {} of {} with name {}'.format(
+                state,
+                self.ELEMENT_NAME,
+                self.name
+            ))
+        counter = 0
+        while self.state != state:
+            counter += 1
+            sleep(4)
+            self.info()
+            if counter % 15 == 0:
+                logging.info(
+                    'Waiting for status {} of {} with name {}'.format(
+                        state,
+                        self.ELEMENT_NAME,
+                        self.name
+                    ))
+            if time() > end:
+                raise RuntimeError(
+                    'Timeout for status {} of element {} exceeded'.format(
+                        state, self.name))

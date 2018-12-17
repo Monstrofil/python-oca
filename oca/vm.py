@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from .pool import Pool, PoolElement, Template, extractString
+from .pool import Pool, StatePoolElement, Template, extractString
 
 
 class History(Template):
@@ -7,7 +7,7 @@ class History(Template):
         return '<oca.vm.History("seq={0}")>'.format(self.seq)
 
 
-class VirtualMachine(PoolElement):
+class VirtualMachine(StatePoolElement):
     METHODS = {
         'info': 'vm.info',
         'allocate': 'vm.allocate',
