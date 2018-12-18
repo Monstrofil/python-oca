@@ -317,6 +317,12 @@ class VirtualMachine(StatePoolElement):
         """
         self._action('reboot-hard' if hard else 'reboot')
 
+    def terminate(self, hard=False):
+        """
+        Terminate the VM. Optionally perform a hard terminate
+        """
+        self._action('terminate-hard' if hard else 'terminate')
+
     def resubmit(self):
         """
         Redeploy the VM.
