@@ -182,36 +182,36 @@ class PoolElement(XMLElement):
 
 
 class StatePoolElement(PoolElement):
-    def wait_for_state(self, state, timeout=60 * 10):
+    def wait_for_state(self, states, timeout=60 * 10):
         """
         Wait for the Opennebula component to have a specified state
 
-        ``state``
-            OpenNebula API state constant
+        ``states``
+            list of OpenNebula API states constants
         ``timeout``
             time to wait in seconds
         """
 
         end = time() + timeout
         logging.info(
-            'Waiting for status {} of {} with name {}'.format(
-                state,
+            'Waiting for states {} of {} with name {}'.format(
+                states,
                 self.ELEMENT_NAME,
                 self.name
             ))
         counter = 0
-        while self.state != state:
+        while self.state not in states:
             counter += 1
             sleep(4)
             self.info()
             if counter % 15 == 0:
                 logging.info(
-                    'Waiting for status {} of {} with name {}'.format(
-                        state,
+                    'Waiting for states {} of {} with name {}'.format(
+                        states,
                         self.ELEMENT_NAME,
                         self.name
                     ))
             if time() > end:
                 raise RuntimeError(
-                    'Timeout for status {} of element {} exceeded'.format(
-                        state, self.name))
+                    'Timeout for states {} of element {} exceeded'.format(
+                        states, self.name))
