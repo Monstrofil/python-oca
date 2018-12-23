@@ -241,8 +241,13 @@ class VirtualMachine(StatePoolElement):
            the default one will be used
         ``snapshot_id``
            id of the snapshot to export, if -1 the current image state will be used
+
+        Returns
+
+        ``image_id``
+          id of the new image
         """
-        self.client.call(self.METHODS['savediskas'], self.id, disk_id,
+        return self.client.call(self.METHODS['savediskas'], self.id, disk_id,
                          image_name, image_type, snapshot_id)
 
     def shutdown(self):
