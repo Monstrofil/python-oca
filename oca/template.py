@@ -12,6 +12,7 @@ class VmTemplate(StatePoolElement):
         'chown': 'template.chown',
         'instantiate': 'template.instantiate',
         'clone': 'template.clone',
+        'rename': 'template.rename',
     }
 
     XML_TYPES = {
@@ -91,6 +92,12 @@ class VmTemplate(StatePoolElement):
             A string containing an extra template to be merged with the one being instantiated
         """
         return self.client.call(VmTemplate.METHODS['instantiate'], self.id, name, pending, extra_template)
+
+    def rename(self, name):
+        """
+        Renames VmTemplate
+        """
+        return self.client.call(VmTemplate.METHODS['rename'], self.id, name)
 
     def __repr__(self):
         return '<oca.VmTemplate("%s")>' % self.name
